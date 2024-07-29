@@ -32,6 +32,8 @@
           "secondary": true
         }
       ],
+      // "alt-enter": ["picker::ConfirmInput", { "secondary": false }],
+      // "ctrl-alt-enter": ["picker::ConfirmInput", { "secondary": true }],
       "ctrl-shift-w": "workspace::CloseWindow",
       "shift-escape": "workspace::ToggleZoom",
       "ctrl-o": "workspace::Open",
@@ -89,10 +91,8 @@
       "shift-down": "editor::SelectDown",
       "shift-left": "editor::SelectLeft",
       "shift-right": "editor::SelectRight",
-      "ctrl-shift-left": "editor::SelectToPreviousWordStart",
-      "ctrl-shift-right": "editor::SelectToNextWordEnd",
-      "ctrl-shift-up": "editor::AddSelectionAbove",
-      "ctrl-shift-down": "editor::AddSelectionBelow",
+      "ctrl-shift-left": "editor::SelectToPreviousWordStart", // cursorWordLeftSelect
+      "ctrl-shift-right": "editor::SelectToNextWordEnd", // cursorWordRightSelect
       "ctrl-shift-home": "editor::SelectToBeginning",
       "ctrl-shift-end": "editor::SelectToEnd",
       "ctrl-a": "editor::SelectAll",
@@ -130,7 +130,6 @@
       "enter": "editor::Newline",
       "shift-enter": "editor::Newline",
       "ctrl-shift-enter": "editor::NewlineBelow",
-      "ctrl-enter": "editor::NewlineAbove",
       "alt-z": "editor::ToggleSoftWrap",
       "ctrl-f": "buffer_search::Deploy",
       "ctrl-h": [
@@ -143,6 +142,12 @@
       "ctrl->": "assistant::QuoteSelection",
       "ctrl-<": "assistant::InsertIntoEditor",
       "ctrl-alt-e": "editor::SelectEnclosingSymbol"
+    }
+  },
+  {
+    "context": "Editor && mode == full && !jupyter",
+    "bindings": {
+      "ctrl-enter": "editor::NewlineAbove"
     }
   },
   {
@@ -233,7 +238,7 @@
     }
   },
   {
-    "context": "ProjectSearchBar && in_replace",
+    "context": "ProjectSearchBar && in_replace > Editor",
     "bindings": {
       "enter": "search::ReplaceNext",
       "ctrl-alt-enter": "search::ReplaceAll"
@@ -276,14 +281,8 @@
   {
     "context": "Terminal",
     "bindings": {
-      "ctrl-w": [
-        "terminal::SendKeystroke",
-        "ctrl-w"
-      ],
-      "ctrl-e": [
-        "terminal::SendKeystroke",
-        "ctrl-e"
-      ]
+      "ctrl-w": ["terminal::SendKeystroke", "ctrl-w"],
+      "ctrl-e": ["terminal::SendKeystroke", "ctrl-e"]
     }
   },
   // Bindings from VS Code
@@ -292,8 +291,8 @@
     "bindings": {
       "ctrl-[": "editor::Outdent",
       "ctrl-]": "editor::Indent",
-      "shift-alt-up": "editor::AddSelectionAbove",
-      "shift-alt-down": "editor::AddSelectionBelow",
+      "shift-alt-up": "editor::AddSelectionAbove", // Insert Cursor Above
+      "shift-alt-down": "editor::AddSelectionBelow", // Insert Cursor Below
       "ctrl-shift-k": "editor::DeleteLine",
       "alt-up": "editor::MoveLineUp",
       "alt-down": "editor::MoveLineDown",
@@ -328,6 +327,14 @@
           "replace_newest": true
         }
       ],
+      "alt-shift-right": "editor::SelectLargerSyntaxNode", // Expand Selection
+      "alt-shift-left": "editor::SelectSmallerSyntaxNode", // Shrink Selection
+      // "ctrl-shift-l": "editor::SelectAllMatches", // Select all occurrences of current selection
+      "ctrl-f2": "editor::SelectAllMatches", // Select all occurrences of current word
+      // "ctrl-shift-down": ["editor::SelectNext", { "replace_newest": false }], // Add selection to Next Find Match
+      // "ctrl-shift-up": ["editor::SelectPrevious", { "replace_newest": false }],
+      // "ctrl-k ctrl-d": ["editor::SelectNext", { "replace_newest": true }],
+      // "ctrl-k ctrl-shift-d": ["editor::SelectPrevious", { "replace_newest": true }],
       "ctrl-k ctrl-i": "editor::Hover",
       "ctrl-/": [
         "editor::ToggleComments",
@@ -372,42 +379,15 @@
   {
     "context": "Pane",
     "bindings": {
-      "alt-1": [
-        "pane::ActivateItem",
-        0
-      ],
-      "alt-2": [
-        "pane::ActivateItem",
-        1
-      ],
-      "alt-3": [
-        "pane::ActivateItem",
-        2
-      ],
-      "alt-4": [
-        "pane::ActivateItem",
-        3
-      ],
-      "alt-5": [
-        "pane::ActivateItem",
-        4
-      ],
-      "alt-6": [
-        "pane::ActivateItem",
-        5
-      ],
-      "alt-7": [
-        "pane::ActivateItem",
-        6
-      ],
-      "alt-8": [
-        "pane::ActivateItem",
-        7
-      ],
-      "alt-9": [
-        "pane::ActivateItem",
-        8
-      ],
+      "alt-1": ["pane::ActivateItem", 0],
+      "alt-2": ["pane::ActivateItem", 1],
+      "alt-3": ["pane::ActivateItem", 2],
+      "alt-4": ["pane::ActivateItem", 3],
+      "alt-5": ["pane::ActivateItem", 4],
+      "alt-6": ["pane::ActivateItem", 5],
+      "alt-7": ["pane::ActivateItem", 6],
+      "alt-8": ["pane::ActivateItem", 7],
+      "alt-9": ["pane::ActivateItem", 8],
       "alt-0": "pane::ActivateLastItem",
       // "ctrl-alt--": "pane::GoBack",
       // "ctrl-alt-shift--": "pane::GoForward",
@@ -431,42 +411,15 @@
       "ctrl-n": "workspace::NewFile",
       "ctrl-shift-n": "workspace::NewWindow",
       "ctrl-`": "terminal_panel::ToggleFocus",
-      "alt-1": [
-        "workspace::ActivatePane",
-        0
-      ],
-      "alt-2": [
-        "workspace::ActivatePane",
-        1
-      ],
-      "alt-3": [
-        "workspace::ActivatePane",
-        2
-      ],
-      "alt-4": [
-        "workspace::ActivatePane",
-        3
-      ],
-      "alt-5": [
-        "workspace::ActivatePane",
-        4
-      ],
-      "alt-6": [
-        "workspace::ActivatePane",
-        5
-      ],
-      "alt-7": [
-        "workspace::ActivatePane",
-        6
-      ],
-      "alt-8": [
-        "workspace::ActivatePane",
-        7
-      ],
-      "alt-9": [
-        "workspace::ActivatePane",
-        8
-      ],
+      "alt-1": ["workspace::ActivatePane", 0],
+      "alt-2": ["workspace::ActivatePane", 1],
+      "alt-3": ["workspace::ActivatePane", 2],
+      "alt-4": ["workspace::ActivatePane", 3],
+      "alt-5": ["workspace::ActivatePane", 4],
+      "alt-6": ["workspace::ActivatePane", 5],
+      "alt-7": ["workspace::ActivatePane", 6],
+      "alt-8": ["workspace::ActivatePane", 7],
+      "alt-9": ["workspace::ActivatePane", 8],
       "ctrl-alt-b": "workspace::ToggleRightDock",
       "ctrl-b": "workspace::ToggleLeftDock",
       "ctrl-j": "workspace::ToggleBottomDock",
@@ -499,38 +452,14 @@
       "ctrl-alt-s": "workspace::SaveAll",
       "ctrl-k m": "language_selector::Toggle",
       "escape": "workspace::Unfollow",
-      "ctrl-k ctrl-left": [
-        "workspace::ActivatePaneInDirection",
-        "Left"
-      ],
-      "ctrl-k ctrl-right": [
-        "workspace::ActivatePaneInDirection",
-        "Right"
-      ],
-      "ctrl-k ctrl-up": [
-        "workspace::ActivatePaneInDirection",
-        "Up"
-      ],
-      "ctrl-k ctrl-down": [
-        "workspace::ActivatePaneInDirection",
-        "Down"
-      ],
-      "ctrl-k shift-left": [
-        "workspace::SwapPaneInDirection",
-        "Left"
-      ],
-      "ctrl-k shift-right": [
-        "workspace::SwapPaneInDirection",
-        "Right"
-      ],
-      "ctrl-k shift-up": [
-        "workspace::SwapPaneInDirection",
-        "Up"
-      ],
-      "ctrl-k shift-down": [
-        "workspace::SwapPaneInDirection",
-        "Down"
-      ],
+      "ctrl-k ctrl-left": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-k ctrl-right": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k ctrl-up": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-k ctrl-down": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-k shift-left": ["workspace::SwapPaneInDirection", "Left"],
+      "ctrl-k shift-right": ["workspace::SwapPaneInDirection", "Right"],
+      "ctrl-k shift-up": ["workspace::SwapPaneInDirection", "Up"],
+      "ctrl-k shift-down": ["workspace::SwapPaneInDirection", "Down"],
       "ctrl-shift-x": "zed::Extensions",
       "alt-t": "task::Rerun",
       "alt-shift-t": "task::Spawn"
@@ -623,6 +552,12 @@
       "ctrl-f8": "editor::GoToHunk",
       "ctrl-shift-f8": "editor::GoToPrevHunk",
       "ctrl-enter": "assistant::InlineAssist"
+    }
+  },
+  {
+    "context": "Editor && jupyter && !ContextEditor",
+    "bindings": {
+      "ctrl-enter": "repl::Run"
     }
   },
   {
@@ -737,6 +672,13 @@
     }
   },
   {
+    "context": "Picker > Editor",
+    "bindings": {
+      "tab": "picker::ConfirmCompletion",
+      "alt-enter": ["picker::ConfirmInput", { "secondary": false }]
+    }
+  },
+  {
     "context": "ChannelModal > Picker > Editor",
     "bindings": {
       "tab": "channel_modal::ToggleMode"
@@ -763,37 +705,17 @@
       "ctrl-alt-space": "terminal::ShowCharacterPalette",
       "shift-ctrl-c": "terminal::Copy",
       "ctrl-insert": "terminal::Copy",
+      "ctrl-a": "editor::SelectAll",
       "shift-ctrl-v": "terminal::Paste",
       "shift-insert": "terminal::Paste",
       "ctrl-enter": "assistant::InlineAssist",
-      "up": [
-        "terminal::SendKeystroke",
-        "up"
-      ],
-      "pageup": [
-        "terminal::SendKeystroke",
-        "pageup"
-      ],
-      "down": [
-        "terminal::SendKeystroke",
-        "down"
-      ],
-      "pagedown": [
-        "terminal::SendKeystroke",
-        "pagedown"
-      ],
-      "escape": [
-        "terminal::SendKeystroke",
-        "escape"
-      ],
-      "enter": [
-        "terminal::SendKeystroke",
-        "enter"
-      ],
-      "ctrl-c": [
-        "terminal::SendKeystroke",
-        "ctrl-c"
-      ],
+      "up": ["terminal::SendKeystroke", "up"],
+      "pageup": ["terminal::SendKeystroke", "pageup"],
+      "down": ["terminal::SendKeystroke", "down"],
+      "pagedown": ["terminal::SendKeystroke", "pagedown"],
+      "escape": ["terminal::SendKeystroke", "escape"],
+      "enter": ["terminal::SendKeystroke", "enter"],
+      "ctrl-c": ["terminal::SendKeystroke", "ctrl-c"],
       "shift-pageup": "terminal::ScrollPageUp",
       "shift-pagedown": "terminal::ScrollPageDown",
       "shift-up": "terminal::ScrollLineUp",
